@@ -1,0 +1,62 @@
+--- /dev/null
++++ b/mk/cfg/arm-unknown-linux-musl.mk
+@@ -0,0 +1,26 @@
++# arm-unknown-linux-musl configuration
++CROSS_PREFIX_arm-unknown-linux-musl=arm-openwrt-linux-
++CC_arm-unknown-linux-musl=gcc
++CXX_arm-unknown-linux-musl=g++
++CPP_arm-unknown-linux-musl=gcc -E
++AR_arm-unknown-linux-musl=ar
++CFG_LIB_NAME_arm-unknown-linux-musl=lib$(1).so
++CFG_STATIC_LIB_NAME_arm-unknown-linux-musl=lib$(1).a
++CFG_LIB_GLOB_arm-unknown-linux-musl=lib$(1)-*.so
++CFG_LIB_DSYM_GLOB_arm-unknown-linux-musl=lib$(1)-*.dylib.dSYM
++CFG_JEMALLOC_CFLAGS_arm-unknown-linux-musl := -D__arm__ $(CFLAGS) -march=armv6 -marm
++CFG_GCCISH_CFLAGS_arm-unknown-linux-musl := -Wall -g -fPIC -D__arm__ $(CFLAGS) -march=armv6 -marm
++CFG_GCCISH_CXXFLAGS_arm-unknown-linux-musl := -fno-rtti $(CXXFLAGS)
++CFG_GCCISH_LINK_FLAGS_arm-unknown-linux-musl := -shared -fPIC -g
++CFG_GCCISH_DEF_FLAG_arm-unknown-linux-musl := -Wl,--export-dynamic,--dynamic-list=
++CFG_LLC_FLAGS_arm-unknown-linux-musl :=
++CFG_INSTALL_NAME_ar,-unknown-linux-gnueabihf =
++CFG_EXE_SUFFIX_arm-unknown-linux-musl :=
++CFG_WINDOWSY_arm-unknown-linux-musl :=
++CFG_UNIXY_arm-unknown-linux-musl := 1
++CFG_LDPATH_arm-unknown-linux-musl :=
++CFG_RUN_arm-unknown-linux-musl=$(2)
++CFG_RUN_TARG_arm-unknown-linux-musl=$(call CFG_RUN_arm-unknown-linux-musl,,$(2))
++RUSTC_FLAGS_arm-unknown-linux-musl := -C target-feature=+v6,+vfp2
++RUSTC_CROSS_FLAGS_arm-unknown-linux-musl :=
++CFG_GNU_TRIPLE_arm-unknown-linux-musl := arm-unknown-linux-musl
+--- /dev/null
++++ b/src/librustc_back/target/arm_unknown_linux_musl.rs
+@@ -0,0 +1,20 @@
++use target::{Target, TargetOptions};
++
++pub fn target() -> Target {
++    let base = super::linux_base::opts();
++    Target {
++        llvm_target: "arm-unknown-linux-gnueabihf".to_string(),
++        target_endian: "little".to_string(),
++        target_pointer_width: "32".to_string(),
++        data_layout: "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64".to_string(),
++        arch: "arm".to_string(),
++        target_os: "linux".to_string(),
++        target_env: "musl".to_string(),
++        target_vendor: "unknown".to_string(),
++
++        options: TargetOptions {
++            features: "+v6,+vfp2".to_string(),
++            .. base
++        }
++    }
++}
+--- a/src/librustc_back/target/mod.rs
++++ b/src/librustc_back/target/mod.rs
+@@ -100,6 +100,7 @@ supported_targets! {
+     ("arm-unknown-linux-gnueabi", arm_unknown_linux_gnueabi),
+     ("arm-unknown-linux-gnueabihf", arm_unknown_linux_gnueabihf),
+     ("armv7-unknown-linux-gnueabihf", armv7_unknown_linux_gnueabihf),
++    ("arm-unknown-linux-musl", arm_unknown_linux_musl),
+     ("aarch64-unknown-linux-gnu", aarch64_unknown_linux_gnu),
+     ("x86_64-unknown-linux-musl", x86_64_unknown_linux_musl),
+     ("i686-unknown-linux-musl", i686_unknown_linux_musl),
