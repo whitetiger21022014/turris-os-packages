@@ -1,15 +1,15 @@
 --- a/src/etc/get-snapshot.py
 +++ b/src/etc/get-snapshot.py
 @@ -18,6 +18,13 @@ from snapshot import *
- 
- 
+
+
  def unpack_snapshot(triple, dl_path):
 +    #ugly hack, opewrt host python is missing bz2 module
-+    if dl_path.find(".tar.bz2"):
-+        bz2_file=os.path.basename(dl_path)
-+        gz_file=bz2_file.replace(".tar.bz2",".tar.gz")
++    if dl_path.endswith(".tar.bz2"):
++        bz2_file = os.path.basename(dl_path)
++        gz_file = bz2_file.replace(".tar.bz2",".tar.gz")
 +        os.system("cd dl && bunzip2 -c < "+bz2_file+ " | gzip -c > "+gz_file +" && cd ..")
-+        dl_path=dl_path.replace(".tar.bz2",".tar.gz")
++        dl_path = dl_path.replace(".tar.bz2",".tar.gz")
 +
      print("opening snapshot " + dl_path)
      tar = tarfile.open(dl_path)
