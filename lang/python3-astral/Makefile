@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=astral-$(PKG_VERSION).zip
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/a/astral/
-PKG_MD5SUM:=f5add6f37c4f8233e1e42c1ee4232963
+PKG_HASH:=41edd323e9b3f1c67317e231d460da68b3d38c65332c0383edeb6fbbdf7ac21d
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/astral-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python3-setuptools

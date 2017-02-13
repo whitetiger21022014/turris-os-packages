@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://ffmpeg.org/releases/
-PKG_MD5SUM:=578c88242872e58cf0db5f23faa4b2af
+PKG_HASH:=490be9e894a3c8433fdd13a6e543b29b5fee161b70b575b381e78cfd8f33f572
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 
 PKG_LICENSE:=LGPL-2.1+ GPL-2+ LGPL-3

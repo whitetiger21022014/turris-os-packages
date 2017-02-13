@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=zeroconf-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/z/zeroconf/
-PKG_MD5SUM:=8b08e391276b4aa9f6d06de4f92ead5b
+PKG_HASH:=15124d12c77407a2951e695179d1e28bdfc283834837e10387f340c888d5b9d0
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/zeroconf-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python3-setuptools

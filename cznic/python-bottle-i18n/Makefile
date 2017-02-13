@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=bottle-i18n-0.1.5.tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/b/bottle-i18n/
-PKG_MD5SUM:=f0942f05fec0f4a3c45765623863cb68
+PKG_HASH:=7f9d343ae30b18a9676cbe612a8be2e99d4741aa4aa6a1b875ea232ba94c7678
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python

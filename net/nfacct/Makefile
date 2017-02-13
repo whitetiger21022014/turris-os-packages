@@ -16,7 +16,7 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=\
 	http://netfilter.org/projects/${PKG_NAME}/files/ \
 	ftp://ftp.netfilter.org/pub/${PKG_NAME}/
-PKG_MD5SUM:=992e863409d144350dbc8f0554a0f478
+PKG_HASH:=81ef261616f313372a957431d17c5a0334984f06ceea190cf390479bf043e7c4
 
 PKG_MAINTAINER:=Stepan Henek <stepan.henek@nic.cz>
 

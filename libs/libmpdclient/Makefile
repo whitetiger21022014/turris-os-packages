@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.musicpd.org/download/libmpdclient/2/
-PGK_MD5SUM:=00606c630b905aa6196330373b366c29
+PGK_SHA256SUM:=4f08cde82dae70895f8e4532a6e9b54b201efd5591c6b5d6834895807ed2ff82
 
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 PKG_LICENSE:=BSD-3-Clause

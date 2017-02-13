@@ -15,7 +15,7 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:= \
 	http://github.com/downloads/mpruett/audiofile/ \
 	http://www.68k.org/~michael/audiofile/
-PKG_MD5SUM:=2731d79bec0acef3d30d2fc86b0b72fd
+PKG_HASH:=cdc60df19ab08bfe55344395739bb08f50fc15c92da3962fac334d3bff116965
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 
 PKG_FIXUP:=autoreconf

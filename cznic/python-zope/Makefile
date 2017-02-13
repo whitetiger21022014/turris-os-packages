@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=zope.interface-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/z/zope.interface/
-PKG_MD5SUM:=edcd5f719c5eb2e18894c4d06e29b6c6
+PKG_HASH:=91cba7b7cd7cb82f6f4e023fe77f94dc3df4ae5287fd55def2148dc232d0c7da
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/zope.interface-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python

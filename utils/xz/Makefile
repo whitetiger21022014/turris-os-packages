@@ -14,7 +14,7 @@ PKG_RELEASE:=1
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://tukaani.org/xz \
 		http://fossies.org/linux/misc
-PKG_MD5SUM:=f90c9a0c8b259aee2234c4e0d7fd70af
+PKG_HASH:=6ff5f57a4b9167155e35e6da8b529de69270efb2b4cf3fbabf41a4ee793840b5
 
 PKG_LICENSE:=Public-Domain LGPL-2.1+ GPL-2.0+ GPL-3.0+
 PKG_LICENSE_FILES:=COPYING

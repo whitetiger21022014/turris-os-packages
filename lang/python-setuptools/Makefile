@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=setuptools-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/90/7a/b64d5804b6d1aebed1892e4df1c21bcb4f8480095ba8004e48999601119d/
-PKG_MD5SUM:=869f3029dcc66a64ba39875e2a2f044a
+PKG_HASH:=19aad19471052d5daefe96f2c1fa2e88dcdb17488bf8708d7e6356881ea833cb
 
 HOST_BUILD_DEPENDS:=python python/host
 

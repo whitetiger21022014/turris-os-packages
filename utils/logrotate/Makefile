@@ -17,7 +17,7 @@ PKG_SOURCE_URL:= \
 	http://ftp.de.debian.org/debian/pool/main/l/logrotate \
 	http://ftp.fr.debian.org/debian/pool/main/l/logrotate \
 	http://ftp.us.debian.org/debian/pool/main/l/logrotate
-PKG_MD5SUM:=bd2e20d8dc644291b08f9215397d28a5
+PKG_HASH:=c12471e70ae8bc923bd5c4f25e8fd6483b68c6301f3cd79f7cfe37bc5b370169
 
 include $(INCLUDE_DIR)/package.mk
 

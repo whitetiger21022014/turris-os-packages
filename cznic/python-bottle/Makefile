@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=bottle-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.io/packages/source/b/bottle/
-PKG_MD5SUM:=6c38912f4755ba71d852fbe320bdd61c
+PKG_HASH:=a1958f9725042a9809ebe33d7eadf90d1d563a8bdd6ce5f01849bff7e941a731
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python python-setuptools

@@ -13,7 +13,7 @@ PKG_RELEASE:=4
 
 PKG_SOURCE_URL:=http://www.balabit.com/downloads/files/syslog-ng/open-source-edition/$(PKG_VERSION)/source/
 PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
-PKG_MD5SUM:=481e5dedcf355268bf4c95bddcae9e55
+PKG_HASH:=fd7708334baf509d564791c891b37f05c77bc9e0b6e4af1e15765ac2ee3d6f29
 
 PKG_CONFIG_DEPENDS:= \
 	CONFIG_IPV6 \

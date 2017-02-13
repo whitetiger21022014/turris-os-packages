@@ -13,7 +13,7 @@ PKG_RELEASE:=2
 
 PKG_SOURCE:=Beaker-1.6.4.tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/B/Beaker/
-PKG_MD5SUM:=c2e102870ed4c53104dec48ceadf8e9d
+PKG_HASH:=5b06dcc9f7b1921bc962235c4051aa5f3f5d3609f42faa6064dc614ace031a3a
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python

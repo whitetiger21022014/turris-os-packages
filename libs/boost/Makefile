@@ -23,7 +23,7 @@ PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/boost
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)_$(PKG_VERSION)
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/$(PKG_NAME)_$(PKG_VERSION)
-PKG_MD5SUM:=5a5d5614d9a07672e1ab2a250b5defc5
+PKG_HASH:=a004d9b3fa95e956383693b86fce1b68805a6f71c2e68944fa813de0fb8c8102
 PKG_LICENSE:=Boost Software License <http://www.boost.org/users/license.html>
 PKG_MAINTAINER:=Carlos M. Ferreira <carlosmf.pt@gmail.com>
 

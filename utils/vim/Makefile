@@ -14,7 +14,7 @@ VIMVER:=74
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=ftp://ftp.vim.org/pub/vim/unix/
-PKG_MD5SUM:=607e135c559be642f210094ad023dc65
+PKG_HASH:=d0f5a6d2c439f02d97fa21bd9121f4c5abb1f6cd8b5a79d3ca82867495734ade
 PKG_MAINTAINER:=Marko Ratkaj <marko.ratkaj@sartura.hr>
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)$(VIMVER)

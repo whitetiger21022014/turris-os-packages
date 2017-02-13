@@ -12,7 +12,7 @@ PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/T/Twisted/
-PKG_MD5SUM:=8379eb15601d6b7543a189594d3fed8f
+PKG_HASH:=038096be8723b678e2ead323b14d0d3e2db161e0c7ce3c98fdd18ca5869acb71
 PKG_BUILD_DEPENDS:=python-setuptools
 
 include $(INCLUDE_DIR)/package.mk

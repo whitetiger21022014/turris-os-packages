@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/p/pyasn1
-PKG_MD5SUM:=f00a02a631d4016818659d1cc38d229a
+PKG_HASH:=853cacd96d1f701ddd67aa03ecc05f51890135b7262e922710112f12a2ed2a7f
 
 PKG_BUILD_DEPENDS:=python python-setuptools
 

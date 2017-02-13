@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=netdisco-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/n/netdisco/
-PKG_MD5SUM:=79db163e571425405a94dac0a956fcb5
+PKG_HASH:=e0f4e93e1a5698668a349ba083f956fb2cca84daace87e7df3aa735b071f33db
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/netdisco-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python3-setuptools

@@ -13,7 +13,7 @@ PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://www.musicpd.org/download/mpd/0.19/
-PKG_MD5SUM:=9f99340ec6b77bea4ba3729e3b76fd7c
+PKG_HASH:=2fd23805132e5002a4d24930001a7c7d3aaf55e3bd0cd71af5385895160e99e7
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 
 PKG_LICENSE:=GPL-2.0

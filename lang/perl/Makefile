@@ -20,7 +20,7 @@ PKG_SOURCE_URL:=ftp://ftp.cpan.org/pub/CPAN/src/5.0 \
 		ftp://ftp.funet.fi/pub/languages/perl/CPAN/src/5.0 \
 		http://ftp.funet.fi/pub/languages/perl/CPAN/src/5.0
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_MD5SUM:=19295bbb775a3c36123161b9bf4892f1
+PKG_HASH:=2b475d0849d54c4250e9cba4241b7b7291cffb45dfd083b677ca7b5d38118f27
 
 PKG_LICENSE:=GPL-1.0+ Artistic-1.0-Perl
 PKG_LICENSE_FILES:=Copying Artistic README

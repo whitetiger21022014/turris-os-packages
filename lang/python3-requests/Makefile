@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=requests-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/r/requests/
-PKG_MD5SUM:=29b173fd5fa572ec0764d1fd7b527260
+PKG_HASH:=398a3db6d61899d25fd4a06c6ca12051b0ce171d705decd7ed5511517b4bb93d
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/requests-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python3-setuptools

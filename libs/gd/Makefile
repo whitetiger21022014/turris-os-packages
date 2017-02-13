@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://www.libgd.org/releases
-PKG_MD5SUM:=6c6c3dbb7bf079e0bb5fbbfd3bb8a71c
+PKG_HASH:=bf222490749d2a9a9ac3593b01eb55aed98461ff81202414707f61b42aa300f9
 
 PKG_FIXUP:=autoreconf
 

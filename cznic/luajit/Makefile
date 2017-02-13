@@ -13,7 +13,7 @@ PKG_VERSION:=2.0.4
 PKG_RELEASE:=1
 PKG_SOURCE_URL:=http://luajit.org/download
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_MD5SUM:=dd9c38307f2223a504cbfb96e477eca0
+PKG_HASH:=620fa4eb12375021bef6e4f237cbd2dd5d49e56beb414bee052c746beef1807d
 include $(INCLUDE_DIR)/package.mk
 
 define Package/luajit

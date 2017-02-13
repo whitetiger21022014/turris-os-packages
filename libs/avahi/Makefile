@@ -13,7 +13,7 @@ PKG_RELEASE:=12
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://avahi.org/download/
-PKG_MD5SUM:=2f22745b8f7368ad5a0a3fddac343f2d
+PKG_HASH:=8372719b24e2dd75de6f59bb1315e600db4fd092805bd1201ed0cb651a2dab48
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 
 PKG_BUILD_DEPENDS:=libexpat libdaemon libgdbm intltool/host libpthread dbus

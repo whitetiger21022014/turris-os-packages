@@ -15,7 +15,7 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:= \
 	http://www.netfilter.org/projects/libnetfilter_acct/files/ \
 	ftp://ftp.netfilter.org/pub/libnetfilter_acct/
-PKG_MD5SUM:=2118d9514c079839ebd9cb3144ad2ad7
+PKG_HASH:=0128f19c3419fbd84f7e6d46b13a33ef7bda9b9f5e493bc5ae1882d087514b71
 
 PKG_FIXUP:=autoreconf
 

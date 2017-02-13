@@ -13,7 +13,7 @@ PKG_RELEASE=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://www.openinfosecfoundation.org/download/
-PKG_MD5SUM:=05854b3390ea86fabe73bdb5a90db36c
+PKG_HASH:=41cbe19c6fd6bd51ebcbc29063f558e2fbba4a2450e5809fee2e461f16a4ed68
 
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf

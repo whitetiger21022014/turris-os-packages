@@ -14,7 +14,7 @@ PKG_RELEASE:=2
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://dist.torproject.org/ \
 	https://archive.torproject.org/tor-package-archive
-PKG_MD5SUM:=cc19107b57136a68e8c563bf2d35b072
+PKG_HASH:=493a8679f904503048114aca6467faef56861206bab8283d858f37141d95105d
 PKG_MAINTAINER:=Hauke Mehrtens <hauke@hauke-m.de>
 PKG_LICENSE_FILES:=LICENSE
 

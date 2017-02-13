@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=netifaces-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/n/netifaces/
-PKG_MD5SUM:=36da76e2cfadd24cc7510c2c0012eb1e
+PKG_HASH:=9656a169cb83da34d732b0eb72b39373d48774aee009a3d1272b7ea2ce109cde
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/netifaces-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python3-setuptools

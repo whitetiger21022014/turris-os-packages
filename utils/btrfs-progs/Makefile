@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-v$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=@KERNEL/linux/kernel/people/kdave/btrfs-progs/
-PKG_MD5SUM:=31be62e9a772f297669b2ee14dc85c27
+PKG_HASH:=eef87b2d0e231656afbffab35718c79a7774cc0101d33165abeb9bb2e017cefe
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-v$(PKG_VERSION)
 
 PKG_MAINTAINER:=Daniel Golle <daniel@makrotopia.org>

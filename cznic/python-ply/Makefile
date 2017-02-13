@@ -13,7 +13,7 @@ PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://www.dabeaz.com/ply
-PKG_MD5SUM:=94726411496c52c87c2b9429b12d5c50
+PKG_HASH:=e7d1bdff026beb159c9942f7a17e102c375638d9478a7ecd4cc0c76afd8de0b8
 
 PKG_BUILD_DEPENDS:=python python-setuptools
 HOST_BUILD_DEPENDS:=python/host python-setuptools/host

@@ -13,7 +13,7 @@ PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://collectd.org/files/
-PKG_MD5SUM:=7a60495208b9383225493c6dd6abb2f0
+PKG_HASH:=3112215b11ca5f1282dcb7115a56fed44efcd6c097718f742d33dbd1b99c7e1b
 
 PKG_FIXUP:=autoreconf
 PKG_REMOVE_FILES:=aclocal.m4 libltdl/aclocal.m4

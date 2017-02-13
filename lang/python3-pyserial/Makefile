@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=pyserial-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/p/pyserial/
-PKG_MD5SUM:=794506184df83ef2290de0d18803dd11
+PKG_HASH:=3542ec0838793e61d6224e27ff05e8ce4ba5a5c5cc4ec5c6a3e8d49247985477
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/pyserial-$(PKG_VERSION)
 

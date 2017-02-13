@@ -13,7 +13,7 @@ PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://download.osgeo.org/libtiff
-PKG_MD5SUM:=d1d2e940dea0b5ad435f21f03d96dd72
+PKG_HASH:=4d57a50907b510e3049a4bba0d7888930fdfc16ce49f1bf693e5b6247370d68c
 
 PKG_FIXUP:=autoreconf
 PKG_REMOVE_FILES:=autogen.sh aclocal.m4

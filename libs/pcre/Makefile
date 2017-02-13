@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
-PKG_MD5SUM:=e3fca7650a0556a2647821679d81f585
+PKG_HASH:=b858099f82483031ee02092711689e7245586ada49e534a06e678b8ea9549e8b
 PKG_MAINTAINER:=Thomas Heil <heil@terminal-consulting.de>
 
 PKG_LICENSE:=BSD-3-Clause

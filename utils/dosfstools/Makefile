@@ -19,7 +19,7 @@ PKG_MAINTAINER:=David Bonnes <david.bonnes@gmail.com>
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/dosfstools/dosfstools/releases/download/v$(PKG_VERSION)/ \
 		http://fossies.org/linux/misc
-PKG_MD5SUM:=64e3b3a59b51d2a97d7ac38b23a124bb
+PKG_HASH:=6e6e76e9f923e5fca47e872599ff1e932b0248ce58fcdc62d64005b4c8ae097b
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk

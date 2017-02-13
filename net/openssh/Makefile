@@ -14,7 +14,7 @@ PKG_RELEASE:=2
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ \
 		http://ftp.belnet.be/pub/OpenBSD/OpenSSH/portable/
-PKG_MD5SUM:=b2db2a83caf66a208bb78d6d287cdaa3
+PKG_HASH:=1b1fc4a14e2024293181924ed24872e6f2e06293f3e8926a376b8aec481f19d1
 
 PKG_LICENSE:=BSD ISC
 PKG_LICENSE_FILES:=LICENCE

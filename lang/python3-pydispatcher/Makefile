@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=PyDispatcher-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/P/PyDispatcher/
-PKG_MD5SUM:=1b9c2ca33580c2770577add7130b0b28
+PKG_HASH:=5570069e1b1769af1fe481de6dd1d3a388492acddd2cdad7a3bde145615d5caf
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/PyDispatcher-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python3-setuptools

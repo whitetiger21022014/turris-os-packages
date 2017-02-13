@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=pytz-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/p/pytz/
-PKG_MD5SUM:=417a47b1c432d90333e42084a605d3d8
+PKG_HASH:=c4ee70cb407f9284517ac368f121cf0796a7134b961e53d9daf1aaae8f44fb90
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/pytz-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python3-setuptools

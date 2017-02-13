@@ -14,7 +14,7 @@ PKG_RELEASE:=1
 PKG_SOURCE:=$(PKG_NAME)src.v$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://www.ijg.org/files/ \
         ftp://ftp.uu.net/graphics/jpeg/
-PKG_MD5SUM:=dbd5f3b47ed13132f04c685d608a7547
+PKG_HASH:=75c3ec241e9996504fe02a9ed4d12f16b74ade713972f3db9e65ce95cd27e35d
 
 PKG_LICENSE:=FREE
 PKG_LICENSE_FILES:=README

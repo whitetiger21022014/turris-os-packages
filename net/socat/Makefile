@@ -13,7 +13,7 @@ PKG_RELEASE:=4
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://www.dest-unreach.org/socat/download
-PKG_MD5SUM:=334e46924f2b386299c9db2ac22bcd36
+PKG_HASH:=d2da659540c38139f388e9437bfaae16bb458d174d056cb3228432a8f489fbaa
 
 PKG_MAINTAINER:= Ted Hess <thess@kitschensync.net>
 

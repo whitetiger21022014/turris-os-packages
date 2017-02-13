@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://downloads.us.xiph.org/releases/speex/
-PKG_MD5SUM:=c4438b22c08e5811ff10e2b06ee9b9ae
+PKG_HASH:=342f30dc57bd4a6dad41398365baaa690429660b10d866b7d508e8f1179cb7a6
 
 PKG_FIXUP:=autoreconf
 

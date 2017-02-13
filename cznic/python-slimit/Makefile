@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=slimit-0.8.1.zip
 PKG_SOURCE_URL:=https://pypi.python.org/packages/source/s/slimit/
-PKG_MD5SUM:=5f5f86e98940a1e71a6a30d501e0d733
+PKG_HASH:=f433dcef899f166b207b67d91d3f7344659cb33b8259818f084167244e17720b
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 HOST_BUILD_DEPENDS:=python/host python-ply/host

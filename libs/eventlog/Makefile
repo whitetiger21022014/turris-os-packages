@@ -13,7 +13,7 @@ PKG_RELEASE:=2
 
 PKG_SOURCE_URL:=http://www.balabit.com/downloads/files/eventlog/0.2/
 PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
-PKG_MD5SUM:=76e3d7a0b8f335c12099e9b91191fbf1
+PKG_HASH:=15146cb72e322766bb8f93b7b0d254d4b9a53826ee65de335dc6ac4376cd51b1
 
 PKG_FIXUP:=autoreconf libtool
 PKG_INSTALL:=1

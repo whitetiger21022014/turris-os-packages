@@ -16,7 +16,7 @@ PKG_SOURCE_URL:= \
 	http://www.netfilter.org/projects/libnetfilter_queue/files/ \
 	ftp://ftp.netfilter.org/pub/libnetfilter_queue/ \
 	http://mirrors.evolva.ro/netfilter.org/libnetfilter_queue/
-PKG_MD5SUM:=df09befac35cb215865b39a36c96a3fa
+PKG_HASH:=838490eb5dbe358f9669823704982f5313a8d397111562373200203f93ac1a32
 
 PKG_FIXUP:=autoreconf
 
