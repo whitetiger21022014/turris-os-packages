@@ -11,7 +11,6 @@ PKG_NAME:=rainbow-omnia
 PKG_VERSION:=3
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/rainbow_omnia.git
-PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_SOURCE_VERSION:=858d5162ffebda7946c33d956436f05840d714e7
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)

@@ -11,7 +11,6 @@ PKG_NAME:=libnetconf
 PKG_VERSION:=11
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/libnetconf.git
-PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_SOURCE_VERSION:=b517ec653f3355ada26cb995b30dbdaac6f7875a
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)

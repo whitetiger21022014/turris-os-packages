@@ -13,7 +13,6 @@ PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/misc.git
-PKG_SOURCE:=$(PKG_NAME).tar.gz
 PKG_SOURCE_VERSION:=2adc26ce3ccf173223dd6e66c21acb322b6ec3ae
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Michal Vaner <michal.vaner@nic.cz>
