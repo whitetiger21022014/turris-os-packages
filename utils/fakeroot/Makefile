@@ -11,10 +11,13 @@ PKG_NAME:=fakeroot
 PKG_VERSION:=1.21
 PKG_RELEASE:=1
 PKG_SOURCE_URL:=http://ftp.debian.org/debian/pool/main/f/fakeroot
-PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
+PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).orig.tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
+PKG_MD5SUM:=be5c9a0e516869fca4a6758105968e5a
 PKG_MAINTAINER:=CZ.NIC <packaging@turris.cz>
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+HOST_BUILD_DEPENDS:=libtool/host
+PKG_BUILD_DEPENDS:=libtool/host
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/host-build.mk
@@ -24,8 +27,7 @@ define Package/fakeroot
 endef
 
 define Build/Compile
-	./bootstrap
-	./configure
+	cd $(PKG_BUILD_DIR); ./bootstrap; ./configure;
 	$(MAKE_VARS) $(MAKE) -C $(PKG_BUILD_DIR) $(MAKE_FLAGS)
 endef
 
