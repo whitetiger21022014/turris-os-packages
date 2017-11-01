@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=oneshot
-PKG_VERSION:=20
+PKG_VERSION:=22
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/misc.git
 PKG_SOURCE:=$(PKG_NAME).tar.gz
-PKG_SOURCE_VERSION:=996287a288010aead2956eb2b635d7ea9c9bf2eb
+PKG_SOURCE_VERSION:=8e53ec913faf2f0f7eff7c5bb8bace516db2ff86
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_MAINTAINER:=Michal Vaner <michal.vaner@nic.cz>
+PKG_MAINTAINER:=CZ.NIC <packaging@turris.cz>
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk

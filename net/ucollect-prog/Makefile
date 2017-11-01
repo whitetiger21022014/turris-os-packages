@@ -9,7 +9,7 @@
 
 include ../ucollect-prog/Makefile.common
 
-$(eval $(call UCOLLECT_BASE,ucollect-prog,117))
+$(eval $(call UCOLLECT_BASE,ucollect-prog,119))
 
 BASE_LIB_DEPS:=+libpcap +librt +libopenssl +libuci +libatsha204 +socat +zlib +gdb
 
@@ -105,6 +105,17 @@ define Package/lcollect/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/lcollect $(1)/usr/bin/
 	#$(INSTALL_DIR) $(1)/usr/lib/debug/usr/bin
 	#$(INSTALL_DATA) $(PKG_BUILD_DIR)/bin/lcollect.debug $(1)/usr/lib/debug/usr/bin/
+endef
+
+
+define Package/ucollect-config/postrm
+#!/bin/sh
+[ -f "$$IPKG_INSTROOT/etc/config/ucollect" ] || touch "$$IPKG_INSTROOT/etc/config/ucollect" || true
+endef
+
+define Package/ucollect-config/preinst
+#!/bin/sh
+[ -n "`cat "$$IPKG_INSTROOT/etc/config/ucollect" 2 >/dev/null`" ] || rm -f "$$IPKG_INSTROOT/etc/config/ucollect"
 endef
 
 define Package/lcollect/postinst

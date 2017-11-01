@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=resolver-conf
 PKG_VERSION:=0.0.1
-PKG_RELEASE:=7
+PKG_RELEASE:=15
 
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -45,6 +45,9 @@ endef
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_DIR) $(1)/etc/resolver
+	$(INSTALL_BIN) ./files/resolver-conv $(1)/etc/resolver/resolver-conv.sh
+	$(INSTALL_BIN) ./files/dhcp_host_domain_ng.py $(1)/etc/resolver/dhcp_host_domain_ng.py
+	$(INSTALL_BIN) ./files/dynamic-domain-conv $(1)/etc/resolver/dynamic-domain-conv.sh
 ifeq ($(CONFIG_TARGET_mvebu_Turris-Omnia),y)
 	$(INSTALL_CONF) ./files/resolver-omnia-config $(1)/etc/config/resolver
 else
@@ -54,20 +57,23 @@ endif
 	$(INSTALL_BIN) ./files/resolver-init $(1)/etc/init.d/resolver
 	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface/
 	$(INSTALL_BIN) ./files/resolver-reload $(1)/etc/hotplug.d/iface/40-resolver-reload
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./files/resolver-defaults $(1)/etc/uci-defaults/resolver-defaults
+
 endef
 
 define Package/$(PKG_NAME)/postinst
 #!/bin/sh
 # check if we are on real system
 if [ -z "$$IPKG_INSTROOT" ]; then
-if [ ! -f /etc/resolver/converted ]; then
-/etc/init.d/resolver convert
-touch /etc/resolver/converted
+	/etc/uci-defaults/resolver-defaults && rm /etc/uci-defaults/resolver-defaults
+	$(if $(CONFIG_TARGET_mvebu_Turris-Omnia),,
+	if [ ! -e "/etc/resolver/converted" ]; then
+		/etc/resolver/dynamic-domain-conv.sh
+		/etc/resolver/resolver-conv.sh
+		touch /etc/resolver/converted
+	fi)
 fi
-/etc/init.d/resolver enable
-fi
-exit 0
 endef
 
 $(eval $(call BuildPackage,resolver-conf))
-

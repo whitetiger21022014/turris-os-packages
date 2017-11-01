@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lighttpd
-PKG_VERSION:=1.4.44
-PKG_RELEASE:=2
+PKG_VERSION:=1.4.45
+PKG_RELEASE:=5
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://download.lighttpd.net/lighttpd/releases-1.4.x
-PKG_MD5SUM:=adb66ca985651957feb209c91c55ebbf917d23630bfc3a216a2f70043c7b5422
+PKG_MD5SUM:=a128e1eda76899ce3fd115efae5fe631
 
 PKG_LICENSE:=BSD-3c
 PKG_LICENSE_FILES:=COPYING
@@ -70,7 +70,6 @@ CONFIGURE_ARGS+= \
 	--without-attr \
 	--without-bzip2 \
 	--without-fam \
-	--without-gdbm \
 	--without-ldap \
 	--with-lua \
 	--without-memcache \
@@ -95,6 +94,11 @@ ifneq ($(SDK)$(CONFIG_PACKAGE_lighttpd-mod-mysql-vhost),)
 else
   CONFIGURE_ARGS+= \
 	--without-mysql
+endif
+
+ifneq ($(SDK)$(CONFIG_PACKAGE_lighttpd-mod-trigger_b4_dl),)
+  CONFIGURE_ARGS+= \
+	--with-gdbm=yes
 endif
 
 ifneq ($(SDK)$(CONFIG_PACKAGE_lighttpd-mod-webdav),)
@@ -147,6 +151,8 @@ define BuildPlugin
     TITLE:=$(2) module
   endef
 
+  Package/lighttpd-mod-$(1)/postinst = Package/lighttpd/postinst
+
   define Package/lighttpd-mod-$(1)/install
 	$(INSTALL_DIR) $$(1)/usr/lib/lighttpd
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lighttpd/mod_$(1).so $$(1)/usr/lib/lighttpd
@@ -179,7 +185,7 @@ $(eval $(call BuildPlugin,extforward,Extract client,,30))
 $(eval $(call BuildPlugin,fastcgi,FastCGI,,30))
 $(eval $(call BuildPlugin,flv_streaming,FLV streaming,,30))
 $(eval $(call BuildPlugin,magnet,Magnet,+liblua,30))
-$(eval $(call BuildPlugin,mysql_vhost,Mysql virtual hosting,+PACKAGE_lighttpd-mod-mysql_vhost:libmysqlclient,30))
+# $(eval $(call BuildPlugin,mysql_vhost,Mysql virtual hosting,+PACKAGE_lighttpd-mod-mysql_vhost:libmysqlclient,30))
 $(eval $(call BuildPlugin,proxy,Proxy,,30))
 $(eval $(call BuildPlugin,rewrite,URL rewriting,+PACKAGE_lighttpd-mod-rewrite:libpcre,30))
 $(eval $(call BuildPlugin,rrdtool,RRDtool,,30))
@@ -189,7 +195,7 @@ $(eval $(call BuildPlugin,setenv,Environment variable setting,,30))
 $(eval $(call BuildPlugin,simple_vhost,Simple virtual hosting,,30))
 $(eval $(call BuildPlugin,ssi,SSI,+libpcre,30))
 $(eval $(call BuildPlugin,status,Server status display,,30))
-$(eval $(call BuildPlugin,trigger_b4_dl,Trigger before download,+PACKAGE_lighttpd-mod-trigger_b4_dl:libpcre,30))
+$(eval $(call BuildPlugin,trigger_b4_dl,Trigger before download,+PACKAGE_lighttpd-mod-trigger_b4_dl:libpcre +PACKAGE_lighttpd-mod-trigger_b4_dl:libgdbm,30))
 $(eval $(call BuildPlugin,userdir,User directory,,30))
 $(eval $(call BuildPlugin,usertrack,User tracking,,30))
 $(eval $(call BuildPlugin,webdav,WebDAV,+PACKAGE_lighttpd-mod-webdav:libsqlite3 +PACKAGE_lighttpd-mod-webdav:libuuid +PACKAGE_lighttpd-mod-webdav:libxml2,30))

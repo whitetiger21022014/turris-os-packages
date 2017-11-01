@@ -7,12 +7,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=bird
-PKG_VERSION:=1.4.4
-PKG_RELEASE:=1
+PKG_VERSION:=1.6.3
+PKG_RELEASE:=2
 
 PKG_SOURCE:=bird-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=ftp://bird.network.cz/pub/bird
-PKG_MD5SUM:=4ec3a9165928a541326ec9de316da974
+PKG_MD5SUM:=39c51cf57c3ba8b5978b2a657ffa2f647ec7f3ae643e91cf42ee5cb070cf7e7c
 PKG_BUILD_DEPENDS:=libncurses libreadline
 
 include $(INCLUDE_DIR)/package.mk
@@ -21,6 +21,7 @@ define Package/bird/Default
   TITLE:=The BIRD Internet Routing Daemon
   URL:=http://bird.network.cz/
   DEPENDS:=+libpthread
+  USERID:=bird=5170:bird=5170
 endef
 
 define Package/birdc/Default

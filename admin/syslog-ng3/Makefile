@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syslog-ng
-PKG_VERSION:=3.0.9
+PKG_VERSION:=3.10.1
 PKG_RELEASE:=4
 
-PKG_SOURCE_URL:=http://www.balabit.com/downloads/files/syslog-ng/open-source-edition/$(PKG_VERSION)/source/
-PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
-PKG_MD5SUM:=481e5dedcf355268bf4c95bddcae9e55
+PKG_SOURCE_URL:=https://github.com/balabit/syslog-ng/releases/download/syslog-ng-$(PKG_VERSION)/
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_MD5SUM:=1b50516783d6d1814cad1fe940c698ef
 
 PKG_CONFIG_DEPENDS:= \
 	CONFIG_IPV6 \
@@ -24,7 +24,8 @@ include $(INCLUDE_DIR)/nls.mk
 define Package/syslog-ng3
   SECTION:=admin
   CATEGORY:=Administration
-  DEPENDS:=+libpcre +glib2 +libeventlog +libopenssl +libwrap +libpthread +librt +zlib +libdbi +psmisc
+  DEPENDS:=+libpcre +glib2 +libeventlog +libopenssl +libwrap +libpthread +librt +zlib +libdbi +psmisc +libwrap +libjson-c +libcurl +libuuid
+  PROVIDES:=syslog
   TITLE:=A powerful syslog daemon
   URL:=http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/
 endef
@@ -60,8 +61,18 @@ CONFIGURE_ARGS +=  \
 	--disable-glibtest \
 	--disable-spoof-source \
 	--disable-sql \
+	--disable-java \
+	--disable-java-modules \
+	--disable-redis \
+	--disable-sql \
+	--disable-python \
+	--disable-smtp \
 	--enable-prce \
 	--disable-linux-caps \
+	--with-librabbitmq-client=no \
+	--with-mongoc=no \
+
+TARGET_CFLAGS += -std=gnu99
 
 TARGET_CPPFLAGS += \
 	-I$(STAGING_DIR)/usr/include/eventlog
@@ -70,8 +81,10 @@ CONFIGURE_VARS += \
 	LIBDBI_CFLAGS="-I$(STAGING_DIR)/usr/include"
 
 define Package/syslog-ng3/install
-	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/syslog-ng $(1)/usr/sbin/
+	cd $(PKG_BUILD_DIR); make DESTDIR=$(1) install
+	rm -rf $(1)/usr/lib/pkgconfig $(1)/usr/lib/*.a $(1)/usr/lib/*.la $(1)/usr/lib/syslog-ng/*.la
+	rm -rf $(1)/etc $(1)/usr/include
+	rmdir $(1)/var
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/syslog-ng.init $(1)/etc/init.d/syslog-ng
 	$(INSTALL_DIR) $(1)/etc

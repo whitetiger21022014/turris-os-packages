@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013 CZ.NIC z.s.p.o. (http://www.nic.cz/)
+# Copyright (C) 2017 CZ.NIC z.s.p.o. (http://www.nic.cz/)
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=foris
-PKG_VERSION:=75
+PKG_VERSION:=96.4
 PKG_RELEASE:=1
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE_PROTO:=git
@@ -21,19 +21,22 @@ PKG_BUILD_DEPENDS:=ruby/host python-slimit/host
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/host-build.mk
+include ./files/foris-translations.mk
+
 $(call include_mk, python-package.mk)
 
-define Package/foris
-	TITLE:=foris
+define Package/foris-common
+	TITLE:=foris-common
 	DEPENDS:=\
-		+python-light +python-bottle +python-bottle-i18n +python-beaker \
-		+python-flup +python-ncclient +nuci +lighttpd +lighttpd-mod-fastcgi \
-		+luci +user_notify
-	MAINTAINER:=Jan Cermak <jan.cermak@nic.cz>
+		+python-light +python-bottle +python-bottle-i18n +python-pbkdf2 \
+		+python-flup +python-ncclient +python-ubus +nuci +lighttpd +lighttpd-mod-fastcgi \
+		+lighttpd-mod-redirect +user_notify +foris-ws +l10n_supported \
+		+sqm-scripts +foris-client
+	MAINTAINER:=Stepan Henek <stepan.henek@nic.cz>
 endef
 
-define Package/foris/description
- Web administration interface using nuci for communication.
+define Package/foris-common/description
+ Common things required for the foris web apps.
 endef
 
 # Set "branding" variable to create different builds for different devices
@@ -56,16 +59,17 @@ define Build/Compile
 	$(call Build/Compile/PyMod,,install --prefix=/usr --root="$(PKG_INSTALL_DIR)")
 endef
 
-define Package/foris/conffiles
+define Package/foris-common/conffiles
 /etc/config/foris
 endef
 
-define Package/foris/install
+define Package/foris-common/install
 	$(INSTALL_DIR) $(1)/etc/lighttpd/conf.d/
-	$(INSTALL_DATA) ./files/foris.lighttpd-conf $(1)/etc/lighttpd/conf.d/foris.conf
+	$(INSTALL_DATA) ./files/foris-root.lighttpd-conf $(1)/etc/lighttpd/conf.d/foris-root.conf
 
 	$(INSTALL_DIR) $(1)/usr/share/foris
 	$(INSTALL_BIN) ./files/lighttpd-dynamic-conf $(1)/usr/share/foris/lighttpd-dynamic-conf
+	$(INSTALL_BIN) ./files/foris-root-cgi $(1)/usr/share/foris/foris-root-cgi
 
 	$(INSTALL_DIR) $(1)/usr/share/foris/plugins
 
@@ -76,12 +80,90 @@ define Package/foris/install
 	$(INSTALL_BIN) ./files/foris.wrapper $(1)/usr/bin/foris
 
 	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)
+
 	$(CP) \
 		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/* \
 		$(1)$(PYTHON_PKG_DIR)/
+	$(RM) -r $(1)$(PYTHON_PKG_DIR)/foris/locale/
+	$(RM) -r $(1)$(PYTHON_PKG_DIR)/foris/langs/??.py
+	$(RM) -r $(1)$(PYTHON_PKG_DIR)/foris/wizard
+	$(RM) $(1)$(PYTHON_PKG_DIR)/foris/wizard_app.py
+	$(RM) -r $(1)$(PYTHON_PKG_DIR)/foris/config
+	$(RM) $(1)$(PYTHON_PKG_DIR)/foris/config_app.py
+
+	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)/foris/locale
+	touch $(1)$(PYTHON_PKG_DIR)/foris/locale/.keep
 endef
 
-define Package/foris/postinst
+define Package/foris-wizard
+	TITLE:=foris-wizard
+	DEPENDS:=\
+		+foris-common
+	MAINTAINER:=Stepan Henek <stepan.henek@nic.cz>
+endef
+
+define Package/foris-wizard/description
+ Foris wizard webapp.
+endef
+
+define Package/foris-config
+	TITLE:=foris-config
+	DEPENDS:=\
+		+foris-common +luci
+	MAINTAINER:=Stepan Henek <stepan.henek@nic.cz>
+endef
+
+define Package/foris-wizard/description
+ Foris config webapp.
+endef
+
+define Package/foris
+	TITLE:=foris
+	DEPENDS:=\
+		+foris-wizard +foris-config
+	MAINTAINER:=Stepan Henek <stepan.henek@nic.cz>
+endef
+
+define Package/foris/description
+ Web administration interface using nuci for communication.
+endef
+
+define Package/foris/install
+	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)/foris/
+	touch $(1)$(PYTHON_PKG_DIR)/foris/.keep
+endef
+
+define Package/foris-wizard/install
+	$(INSTALL_DIR) $(1)/etc/lighttpd/conf.d/
+	$(INSTALL_DATA) ./files/foris-wizard.lighttpd-conf $(1)/etc/lighttpd/conf.d/foris-wizard.conf
+	$(INSTALL_DIR) $(1)/usr/share/foris
+	$(INSTALL_BIN) ./files/foris-wizard-cgi $(1)/usr/share/foris/foris-wizard-cgi
+
+	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)/foris/wizard
+	$(CP) \
+		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/foris/wizard_app.py \
+		$(1)$(PYTHON_PKG_DIR)/foris/
+	$(CP) \
+		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/foris/wizard/* \
+		$(1)$(PYTHON_PKG_DIR)/foris/wizard/
+endef
+
+define Package/foris-config/install
+	$(INSTALL_DIR) $(1)/etc/lighttpd/conf.d/
+	$(INSTALL_DATA) ./files/foris-config.lighttpd-conf $(1)/etc/lighttpd/conf.d/foris-config.conf
+	$(INSTALL_DIR) $(1)/usr/share/foris
+	$(INSTALL_BIN) ./files/foris-config-cgi $(1)/usr/share/foris/foris-config-cgi
+
+	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)/foris/config
+	$(CP) \
+		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/foris/config_app.py \
+		$(1)$(PYTHON_PKG_DIR)/foris/
+	$(CP) \
+		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/foris/config/* \
+		$(1)$(PYTHON_PKG_DIR)/foris/config/
+endef
+
+define Package/foris-common/postinst
 #!/bin/sh
 set -x
 [ -n "$$IPKG_INSTROOT" ] || {
@@ -95,11 +177,43 @@ fi
 }
 endef
 
-define Package/foris/prerm
+define Package/foris-common/prerm
 #!/bin/sh
 set -x
 /etc/init.d/lighttpd disable
 /etc/init.d/lighttpd stop
+endef
+
+define Package/foris-wizard/postinst
+#!/bin/sh
+set -x
+[ -n "$$IPKG_INSTROOT" ] || {
+/etc/init.d/lighttpd restart
+}
+endef
+
+define Package/foris-wizard/postrm
+#!/bin/sh
+set -x
+[ -n "$$IPKG_INSTROOT" ] || {
+/etc/init.d/lighttpd restart
+}
+endef
+
+define Package/foris-config/postinst
+#!/bin/sh
+set -x
+[ -n "$$IPKG_INSTROOT" ] || {
+/etc/init.d/lighttpd restart
+}
+endef
+
+define Package/foris-config/postrm
+#!/bin/sh
+set -x
+[ -n "$$IPKG_INSTROOT" ] || {
+/etc/init.d/lighttpd restart
+}
 endef
 
 define Package/foris-oldconfig
@@ -119,6 +233,7 @@ endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR)/mk/
+	$(INSTALL_DATA) ./files/foris-translations.mk $(STAGING_DIR)/mk/
 	$(INSTALL_DATA) ./files/foris-plugin.mk $(STAGING_DIR)/mk/
 endef
 
@@ -133,7 +248,49 @@ define Host/Clean
 	$(RM) -rf $(STAGING_DIR_HOST)/bin/foris_compilemessages.sh
 endef
 
+# $1 = translation name
+define ForisTranslation
+ define Package/foris-l10n-$(1)
+	TITLE:=foris-l10n-$(1)
+	DEPENDS:=\
+		+foris
+	MAINTAINER:=Stepan Henek <stepan.henek@nic.cz>
+ endef
+
+ define Package/foris-l10n-$(1)/install
+	$(INSTALL_DIR) $$(1)$(PYTHON_PKG_DIR)/foris/locale/$(1)/LC_MESSAGES
+	$(CP) \
+		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/foris/locale/$(1)/LC_MESSAGES/*.mo \
+		$$(1)$(PYTHON_PKG_DIR)/foris/locale/$(1)/LC_MESSAGES/
+	$(INSTALL_DIR) $$(1)$(PYTHON_PKG_DIR)/foris/langs/
+	$(CP) \
+		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/foris/langs/$(1).py \
+		$$(1)$(PYTHON_PKG_DIR)/foris/langs/
+ endef
+
+ define Package/foris-l10n-$(1)/postrm
+#!/bin/sh
+set -x
+[ -n "$$$${IPKG_INSTROOT}" ] || /etc/init.d/lighttpd restart
+ endef
+
+ define Package/foris-l10n-$(1)/postinst
+#!/bin/sh
+set -x
+[ -n "$$$${IPKG_INSTROOT}" ] || /etc/init.d/lighttpd restart
+ endef
+
+endef
+
+# Translation definitions
+$(foreach trans,$(FORIS_TRANSLATIONS),$(eval $(call ForisTranslation,$(trans))))
+
 $(eval $(call BuildPackage,foris))
+$(foreach trans,$(FORIS_TRANSLATIONS),$(eval $(call BuildPackage,foris-l10n-$(trans))))
+
 $(eval $(call PyPackage,foris))
+$(eval $(call BuildPackage,foris-common))
+$(eval $(call BuildPackage,foris-config))
+$(eval $(call BuildPackage,foris-wizard))
 $(eval $(call BuildPackage,foris-oldconfig))
 $(eval $(call HostBuild))

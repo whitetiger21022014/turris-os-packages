@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cert-backup
-PKG_VERSION:=6
+PKG_VERSION:=9
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/misc.git
 PKG_SOURCE:=$(PKG_NAME).tar.gz
-PKG_SOURCE_VERSION:=a1f715ec782fb7083c6474733fdbdface7cdc902
+PKG_SOURCE_VERSION:=ace5d6e699c19885a3baf1d9e526d5f634733ef3
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_MAINTAINER:=Michal Vaner <michal.vaner@nic.cz>
+PKG_MAINTAINER:=CZ.NIC <packaging@turris.cz>
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk

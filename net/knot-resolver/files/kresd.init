@@ -8,6 +8,10 @@ PROG=/usr/bin/kresd
 CONFIGFILE=/tmp/kresd.config
 ROOTKEYFILE=/etc/root.keys
 DEFAULT_RUNDIR=/tmp/kresd
+HINTS_CONFIG=$DEFAULT_RUNDIR/hints.tmp
+DHCP_SCRIPT=/etc/resolver/dhcp_host_domain_ng.py
+STATIC_DOMAINS=1
+DYNAMIC_DOMAINS=0
 
 # Check the /etc/unbound/root.keys is reasonable and try to fix it with given command
 check_root_key() {
@@ -25,7 +29,7 @@ service_triggers() {
 add_listen_addr() {
 	local addr="$1"
 	local port="$2"
-	[ "$addr" == "::0" ] && addr="::"
+	[ "$addr" = "::0" ] && addr="::"
 	procd_append_param command -a "$addr#$port"
 }
 
@@ -33,7 +37,7 @@ init_header() {
 	echo "--Automatically generated file; DO NOT EDIT" > $CONFIGFILE
 	echo "modules = {" >> $CONFIGFILE
 	config_get_bool prefetch common prefetch 0
-	echo "    'hints'"  >> $CONFIGFILE
+	echo "    'hints > iterate'"  >> $CONFIGFILE
 	echo "  , 'policy'" >> $CONFIGFILE
 	if [ "$prefetch" \!= 0 ]; then
 		echo "  , 'stats'" >> $CONFIGFILE
@@ -43,6 +47,9 @@ init_header() {
 		echo "  }" >> $CONFIGFILE
 	fi
 	echo "}" >> $CONFIGFILE
+
+	# clear hints file
+	echo "" > $HINTS_CONFIG
 }
 
 set_param_func() {
@@ -120,9 +127,13 @@ load_uci_config_common() {
 	config_get_bool do_forward "$section" forward_upstream 1
 	if [ "$do_forward" = "1" ] ; then
 		local SERVERS
-		SERVERS=$(sed -ne 's/^nameserver \(.*\)/\1/p' /tmp/resolv.conf.auto | sort)
+		SERVERS=$(sed -ne 's/^nameserver \(.*\)/\1/p' /tmp/resolv.conf.auto | sort -u |head -n 4)
 		if [ "$SERVERS" ] ; then
-			echo "policy:add(policy.all(policy.FORWARD({">>$CONFIGFILE
+			if [ "$ignore_root_key" = "1"  ] ; then
+				echo "policy.add(policy.all(policy.STUB({">>$CONFIGFILE
+			else
+				echo "policy.add(policy.all(policy.FORWARD({">>$CONFIGFILE
+			fi
 			for SERVER in $SERVERS ; do
 				echo "	'$SERVER',">>$CONFIGFILE
 			done
@@ -130,6 +141,12 @@ load_uci_config_common() {
 		fi
 		md5sum /tmp/resolv.conf.auto | cut -f1 -d\ >/tmp/resolv.conf.auto.last.md5
 	fi
+
+	# enable static local domains
+	config_get_bool STATIC_DOMAINS "$section" static_domains 1
+
+	# get dynamic domains
+	config_get_bool DYNAMIC_DOMAINS "$section" dynamic_domains 1
 
 	# include custom kresd config
 	include_custom_config
@@ -144,12 +161,38 @@ set_local_host() {
 	config_get NAME $1 name
 	config_get IP $1 ip
 	if [ -n "$NAME" ] && [ -n "$DOMAIN" ] && [ -n "$IP" ]; then
-		echo "hints['$NAME.$DOMAIN'] = '$IP'" >> $CONFIGFILE
+		echo "$IP $NAME.$DOMAIN" >> $HINTS_CONFIG
+	fi
+}
+
+set_dnsmasq_dhcp_script() {
+	uci_set dhcp $1 dhcpscript $2
+	uci_commit dhcp
+}
+
+get_dnsmasq_dhcp_script() {
+	local config="$1"
+	local DHCPSCRIPT
+	config_get DHCPSCRIPT "$config" dhcpscript
+	echo $DHCPSCRIPT
+}
+
+add_rpz_file() {
+	local rpz_file="$1"
+	if [ -e "$rpz_file" ]; then
+		echo "policy.add(policy.rpz(policy.DENY, '$rpz_file'))" >>$CONFIGFILE
+	fi
+}
+
+add_hostname_config() {
+	local hostname_config="$1"
+	if [ -e "$hostname_config" ] && [ "$STATIC_DOMAINS" = "1" ]; then
+		cat $hostname_config >> $HINTS_CONFIG
 	fi
 }
 
 load_uci_config_kresd() {
-	local addr config keyfile forks verbose rundir log_stderr log_stdout
+	local addr config keyfile forks verbose rundir log_stderr log_stdout hostname_config dhcp_script_path
 	local section="kresd"
 
 	# knot-resolver config
@@ -171,14 +214,30 @@ load_uci_config_kresd() {
 	procd_set_param stdout $log_stdout
 
 	# hostnames for local DNS
-	config_get hostname_config "$section" hostname_config "/etc/hosts"
-	if [ -e "$hostname_config" ]; then
-		set_param_func "hints.config" "'$hostname_config'"
-	fi
+	config_list_foreach "$section" hostname_config add_hostname_config
+
+	#add rpz files
+	config_list_foreach "$section" rpz_file add_rpz_file
+
 	config_load dhcp
 	config_foreach get_local_domain dnsmasq
-	config_foreach set_local_host host
+
+	dhcp_script_path=$(config_foreach get_dnsmasq_dhcp_script dnsmasq)
+	if [ "$STATIC_DOMAINS" = "1" ]; then
+		config_foreach set_local_host host
+		config_foreach set_local_host domain
+	fi
+	if [ "$DYNAMIC_DOMAINS" = "1" ]; then
+		echo "Enable dhcp script"
+		config_foreach set_dnsmasq_dhcp_script dnsmasq "$DHCP_SCRIPT"
+		#reload dhcp config with script param
+		/etc/init.d/dnsmasq reload
+	fi
+
 	config_load resolver
+
+	# load hints config
+	set_param_func "hints.config" "'$HINTS_CONFIG'"
 }
 
 run_instance() {
@@ -189,6 +248,12 @@ run_instance() {
 	load_uci_config_kresd
 	load_uci_config_common
 	procd_close_instance
+	( sleep 15 # Wait for resolver to start working and system to boot up
+	  if ! ip -6 r s | grep -q '^default' &&\
+	     ping -c 1 api.turris.cz > /dev/null 2>&1 && \
+	     ! ping -6 -c 1 api.turris.cz > /dev/null 2>&1; then
+		echo "net.ipv6 = false" | socat - UNIX-CONNECT:$(sleep 5; ls -1 /tmp/kresd/tty/*) > /dev/null 2>&1
+	  fi) &
 }
 
 start_service() {

@@ -15,13 +15,13 @@ lists = {
     title_de = 'Hausautomation',
     title_en = 'Home automation'
 },
-['cacerts'] = {
-    description_cs = 'Seznam certifikátů důvěryhodných autorit pro SSL/TLS (přejato z Debianu).',
-    description_de = 'Liste der Zertifikate vertrauenswürdiger Zertifizierungsstellen für SSL/TLS (ausgeborgt von Debian).',
-    description_en = 'List of trusted CA certificates for SSL/TLS (borrowed from Debian).',
-    title_cs = 'Certifikáty kořenových autorit',
-    title_de = 'Zertifikate der Zertifizierungsstellen',
-    title_en = 'CA root certificates'
+['dev-detect'] = {
+    description_cs = 'Software pro detekci nově připojených zařízení na lokální síti (EXPERIMENTÁLNÍ).',
+    description_de = 'Software für die Erkennung neuer Geräte im lokalen Netzwerk (EXPERIMENTELL).',
+    description_en = 'Software for detecting new devices on local network (EXPERIMENTAL).',
+    title_cs = 'Detekce připojených zařízení',
+    title_de = 'Geräterkennung',
+    title_en = 'Device detection'
 },
 ['dvb'] = {
     description_cs = 'Software na sdílení televizního vysílání přijímaného Turrisem. Neobsahuje ovladače pro zařízení.',
@@ -79,6 +79,14 @@ lists = {
     title_de = 'Netzwerkprotokoll-Erweiterungen',
     title_en = 'Extensions of network protocols'
 },
+['openvpn'] = {
+    description_cs = 'Jednoduché nastavení OpenVPN serveru z Forisu.',
+    description_de = 'Einfache Einstellung des OpenVPN server von Foris.',
+    description_en = 'An easy setup of OpenVPN server from Foris.',
+    title_cs = 'OpenVPN',
+    title_de = 'OpenVPN',
+    title_en = 'OpenVPN'
+},
 ['printserver'] = {
     description_cs = 'Služby umožňující připojit tiskárnu k routeru a používat ji pro tisk po síti.',
     description_de = 'Dienste die ermöglichen ein Drucker anzuschließen, um ihn als Netzwerkdrucker zu verwenden.',
@@ -86,14 +94,6 @@ lists = {
     title_cs = 'Tiskový server',
     title_de = 'Druckserver',
     title_en = 'Print server'
-},
-['shell-utils'] = {
-    description_cs = 'Programy usnadňující používání příkazové řádky (např. bash či vim).',
-    description_de = 'Programme für eine bequemere Benutzung der Kommandozeile (wie z. B. bash oder vim).',
-    description_en = 'Programs making life in command line slightly easier (like bash or vim).',
-    title_cs = 'Pohodlnější příkazová řádka',
-    title_de = 'Komfortablere Kommandozeile',
-    title_en = 'More comfortable command line'
 },
 ['snd'] = {
     description_cs = 'Podpora pro připojení USB zvukové karty.',
@@ -126,13 +126,5 @@ lists = {
     title_cs = 'Webová kamera',
     title_de = 'Webkamera',
     title_en = 'Web camera'
-},
-['i_agree_datacollect'] = {
-    description_cs = 'Programy pro sběr dat do projektu turris.cz.',
-    description_de = 'Programme für Datenerfassung für das turris.cz-Projekt.',
-    description_en = 'Programs collecting data for the turris.cz project.',
-    title_cs = 'Sběr dat',
-    title_de = 'Datenerfassung',
-    title_en = 'Data collection'
 }
 };

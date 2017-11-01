@@ -9,11 +9,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vixie-cron
 PKG_VERSION:=7
+PKG_RELEASE:=3
 PKG_SOURCE_URL:=ftp://ftp.isc.org/isc/cron/
 PKG_SOURCE_VERSION:=4.1
 PKG_SOURCE:=cron_$(PKG_SOURCE_VERSION).shar
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_MAINTAINER:=Martin Strbacka <martin.strbacka@nic.cz>
+PKG_MAINTAINER:=CZ.NIC <packaging@turris.cz>
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
@@ -21,6 +22,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)
 	TITLE:=$(PKG_NAME)
 	DEPENDS:= +syslog-ng3 @(!BUSYBOX_CONFIG_CROND&&!BUSYBOX_CONFIG_CRONTAB)
+	PROVIDES:=cron
 endef
 
 define Build/Prepare
@@ -31,9 +33,6 @@ endef
 
 define Package/$(PKG_NAME)/postinst
 #!/bin/sh
-[ -d $${IPKG_INSTROOT}/etc/crontabs ] || mkdir -p $${IPKG_INSTROOT}/etc/crontabs
-[ -d $${IPKG_INSTROOT}/etc/cron.d ] || mkdir -p /etc/cron.d
-
 [ -n "$$IPKG_INSTROOT" ] || {
 /etc/init.d/cron enable
 /etc/init.d/cron restart
@@ -46,11 +45,6 @@ define Package/$(PKG_NAME)/prerm
 /etc/init.d/cron stop
 endef
 
-define Package/$(PKG_NAME)/conffiles
-/etc/cron.d/
-/etc/crontabs
-endef
-
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/usr/sbin
@@ -58,6 +52,10 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) ./files/cron.init $(1)/etc/init.d/cron
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/cron  $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/crontab  $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/etc/cron.d
+	$(INSTALL_CONF) ./files/.keep $(1)/etc/cron.d/.keep
+	$(INSTALL_DIR) $(1)/etc/crontabs
+	$(INSTALL_CONF) ./files/.keep $(1)/etc/crontabs/.keep
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

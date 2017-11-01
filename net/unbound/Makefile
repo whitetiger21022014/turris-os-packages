@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=unbound
-PKG_VERSION:=1.5.10
-PKG_RELEASE:=5
+PKG_VERSION:=1.6.6
+PKG_RELEASE:=0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://www.unbound.net/downloads
-PKG_MD5SUM:=a39b8b4fcca2a2b35a2daa53fe35150cc3f09038dc9acede09c912fc248a9486
+PKG_MD5SUM:=972b14dc33093e672652a7b2b5f159bab2198b0fe9c9e1c5707e1895d4d4b390
 
 PKG_BUILD_DEPENDS:=libexpat
 PKG_BUILD_PARALLEL:=1
@@ -26,6 +26,7 @@ define Package/unbound/Default
   TITLE:=A validating, recursive & caching DNS resolver
   URL:=http://www.unbound.net/
   DEPENDS:=+libldns +libopenssl +dnssec-rootkey +resolver-conf
+  PROVIDES:=dns-resolver
 endef
 
 ifeq ($(CONFIG_TARGET_mpc85xx_p2020_nand_TURRISNAND),y)
@@ -62,15 +63,6 @@ endef
 
 define Package/unbound-anchor/description
   This package contains the Unbound anchor utility.
-endef
-
-define Package/unbound-control
-  $(call Package/unbound/Default)
-  SECTION:=net
-  CATEGORY:=Network
-  SUBMENU:=IP Addresses and Names
-  TITLE+= (control utility)
-  DEPENDS+= +unbound
 endef
 
 define Package/unbound-control/description
@@ -139,12 +131,12 @@ define Package/unbound/install
 		$(PKG_INSTALL_DIR)/usr/sbin/unbound \
 		$(PKG_INSTALL_DIR)/usr/sbin/unbound-checkconf \
 		$(1)/usr/sbin/
+
+	$(CP) $(PKG_INSTALL_DIR)/usr/sbin/unbound-control $(1)/usr/sbin/
 	$(INSTALL_DIR) $(1)/etc/unbound
 	$(INSTALL_CONF) ./files/named.cache $(1)/etc/unbound/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/unbound-init $(1)/etc/init.d/unbound
-	$(INSTALL_DIR) $(1)/etc/uci-defaults
-	$(INSTALL_BIN) ./files/unbound.defaults $(1)/etc/uci-defaults/unbound
 	$(INSTALL_DIR) $(1)/usr/share/unbound/
 	$(INSTALL_BIN) ./files/unbound.postinst $(1)/usr/share/unbound/postinst
 	$(LN) /var/etc/unbound/unbound.conf $(1)/etc/unbound/unbound.conf
@@ -161,18 +153,19 @@ endef
 define Package/unbound/prerm
 #!/bin/sh
 set -ex
+if [ -z "$$IPKG_INSTROOT" ]; then
 /etc/init.d/unbound disable
 /etc/init.d/unbound stop
-uci delete dhcp.@dnsmasq[0].port
+uci set resolver.common.prefered_resolver="kresd"
 uci commit
-sleep 2
-/etc/init.d/dnsmasq restart
-sleep 20 # Cooldown for above (problems in times of reinstall)
+fi
 endef
 
 define Package/unbound/postrm
 #!/bin/sh
+if [ -z "$$IPKG_INSTROOT" ]; then
 [ \! -x /etc/init.d/resolver ] || /etc/init.d/resolver restart
+fi
 endef
 
 define Package/unbound-anchor/install
@@ -202,7 +195,6 @@ endef
 
 $(eval $(call BuildPackage,unbound))
 $(eval $(call BuildPackage,unbound-anchor))
-$(eval $(call BuildPackage,unbound-control))
 $(eval $(call BuildPackage,unbound-control-setup))
 $(eval $(call BuildPackage,unbound-host))
 $(eval $(call BuildPackage,libunbound))

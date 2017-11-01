@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cznic-cacert-bundle
-PKG_VERSION:=34
+PKG_VERSION:=36
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/misc.git
 PKG_SOURCE:=$(PKG_NAME).tar.gz
-PKG_SOURCE_VERSION:=88555c1df0968c53e1a16050c5fea50b23048f9d
+PKG_SOURCE_VERSION:=a6d30c573c636b3466ee36b4207e25a88ee8e5f2
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_MAINTAINER:=Michal Vaner <michal.vaner@nic.cz>
+PKG_MAINTAINER:=CZ.NIC <packaging@turris.cz>
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
@@ -37,7 +37,7 @@ endef
 
 define Package/$(PKG_NAME)
 	TITLE:=$(PKG_NAME)
-	DEPENDS:=+cert-backup +vixie-cron +c-rehash
+	DEPENDS:=+cert-backup +c-rehash
 endef
 
 # The built is empty. But as there's no makefile in the git repo, we need to

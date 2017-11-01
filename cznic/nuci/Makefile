@@ -1,5 +1,5 @@
 #
-## Copyright (C) 2013-2015 CZ.NIC z.s.p.o. (http://www.nic.cz/)
+## Copyright (C) 2013-2017 CZ.NIC z.s.p.o. (http://www.nic.cz/)
 #
 ## This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,21 +8,22 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nuci
-PKG_VERSION:=144
+PKG_VERSION:=158
+PKG_RELEASE:=2
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/nuci.git
 PKG_SOURCE:=$(PKG_NAME).tar.gz
-PKG_SOURCE_VERSION:=c31e449419e54c02709c8882fe5775d4b94b00dd
+PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_MAINTAINER:=Martin Strbacka <martin.strbacka@nic.cz>
+PKG_MAINTAINER:=CZ.NIC <packaging@turris.cz>
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)
 	TITLE:=nuci
-	DEPENDS:=+libnetconf +liblua +libuci +libuci-lua +ip +socat +libatsha204 +coreutils +coreutils-base64 +bzip2 +thermometer +user_notify +ntpdate
+	DEPENDS:=+libnetconf +liblua +libuci +libuci-lua +ip +socat +libatsha204 +coreutils +coreutils-base64 +bzip2 +thermometer +user_notify +ntpdate +vixie-cron
 endef
 
 define Build/Compile
@@ -42,18 +43,28 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/nuci-helper-config-restore $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/nuci-helper-config-backup $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/nuci-helper-checkconn $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/nuci-helper-autocollect $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tools/nucipty $(1)/usr/bin/nucipty
 
 	$(INSTALL_DIR) $(1)/usr/share/nuci/lua_plugins
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/lua_plugins/*.yin $(1)/usr/share/nuci/lua_plugins/
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/lua_plugins/*.lua $(1)/usr/share/nuci/lua_plugins/
-	rm $(patsubst %,$(1)/usr/share/nuci/lua_plugins/%.*,nethist nuci-tls smrt diagnostics)
+	rm $(patsubst %,$(1)/usr/share/nuci/lua_plugins/%.*,nethist nuci-tls smrt diagnostics ca-gen openvpn-client)
 
 	$(INSTALL_DIR) $(1)/usr/share/nuci/lua_lib
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/lua_lib/* $(1)/usr/share/nuci/lua_lib/
 
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_CONF) ./files/backups.conf $(1)/etc/config/backups
+
+	$(INSTALL_DIR) $(1)/etc/cron.d
+	$(INSTALL_DATA) ./files/autocollect.cron $(1)/etc/cron.d/autocollect
+endef
+
+define Package/$(PKG_NAME)/postinst
+[ -n "$$IPKG_INSTROOT" ] || {
+/usr/bin/nuci-helper-autocollect
+}
 endef
 
 define plugin
@@ -77,7 +88,7 @@ $(eval $(call plugin,diagnostics,Nuci plugin for the diagnostics module,+turris-
 
 define Package/nuci-tls
 TITLE:=TLS access to nuci
-DEPENDS:=+nuci +socat +openssl-util
+DEPENDS:=+nuci +socat +openssl-util +dhparam
 endef
 
 define Package/nuci-tls/install
@@ -110,8 +121,37 @@ define Package/nuci-tls/prerm
 /etc/init.d/nuci-tls stop
 endef
 
+define Package/nuci-ca-gen
+TITLE:=Nuci plugin for generating CAs, certificates and dhparams
+DEPENDS:=+nuci +openssl-util
+endef
+
+define Package/nuci-ca-gen/install
+	$(INSTALL_DIR) $(1)/usr/share/nuci/ca
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ca/gen $(1)/usr/share/nuci/ca/
+	$(INSTALL_DIR) $(1)/usr/share/nuci/lua_plugins
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/ca/openssl.cnf $(1)/usr/share/nuci/ca/
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/lua_plugins/ca-gen.yin $(1)/usr/share/nuci/lua_plugins/
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/lua_plugins/ca-gen.lua $(1)/usr/share/nuci/lua_plugins/
+	$(INSTALL_DIR) $(1)/etc/cron.d/
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/src/ca/nuci-ca.cron $(1)/etc/cron.d/
+endef
+
+define Package/nuci-openvpn-client
+TITLE:=Nuci plugin for obtaining openvpn client config
+DEPENDS:=+nuci +openvpn-openssl
+endef
+
+define Package/nuci-openvpn-client/install
+	$(INSTALL_DIR) $(1)/usr/share/nuci/lua_plugins
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/lua_plugins/openvpn-client.yin $(1)/usr/share/nuci/lua_plugins/
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/lua_plugins/openvpn-client.lua $(1)/usr/share/nuci/lua_plugins/
+endef
+
 $(eval $(call BuildPackage,$(PKG_NAME)))
 $(eval $(call BuildPackage,nuci-smrt))
 $(eval $(call BuildPackage,nuci-nethist))
 $(eval $(call BuildPackage,nuci-diagnostics))
 $(eval $(call BuildPackage,nuci-tls))
+$(eval $(call BuildPackage,nuci-ca-gen))
+$(eval $(call BuildPackage,nuci-openvpn-client))
