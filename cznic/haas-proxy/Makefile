@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=haas-proxy
 PKG_VERSION:=1.9
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 PKG_SOURCE_VERSION:=bbf8629d1d64840407eefc23d2b6c8835365347b
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/haas/proxy/raw/$(PKG_SOURCE_VERSION)/release/
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -16,14 +16,14 @@ PKG_MAINTAINER:=CZ.NIC <packaging@nic.cz>
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
-$(call include_mk, python-package.mk)
+$(call include_mk, python3-package.mk)
 
 define Package/haas-proxy
   SECTION:=net
   CATEGORY:=Network
   TITLE:=haas-proxy
   URL:=https://haas.nic.cz
-  DEPENDS:=+python-base +python-cachetools +python-requests +python-twisted +python-crypto +python-service-identity +server-uplink +sshpass
+  DEPENDS:=+python3-base +python3-cachetools +python3-requests +python-twisted +python3-cryptography +python-service-identity +server-uplink +sshpass
   CONFLICTS:=mitmproxy
 endef
 
@@ -34,7 +34,7 @@ records executed commands.
 endef
 
 define Build/Compile
-	$(call Build/Compile/PyMod,,install --prefix=/usr --root=$(PKG_INSTALL_DIR))
+	$(call Build/Compile/Py3Mod,,install --prefix=/usr --root=$(PKG_INSTALL_DIR))
 	$(INSTALL_DIR) $(PKG_INSTALL_DIR)/etc/init.d/
 	$(INSTALL_DIR) $(PKG_INSTALL_DIR)/etc/config
 	$(INSTALL_DATA) ./files/haas.uci $(PKG_INSTALL_DIR)/etc/config/haas
@@ -56,7 +56,7 @@ define Package/haas-proxy/install
 	$(CP) \
 		$(PKG_INSTALL_DIR)/* \
 		$(1)
-	$(RM) -rf $(1)/usr/lib/python2.7/site-packages/haas_proxy-1.2*
+	$(RM) -rf $(1)/usr/lib/python3.6/site-packages/haas_proxy-*
 endef
 
 define Package/haas-proxy/postinst
