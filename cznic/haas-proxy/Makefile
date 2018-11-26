@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 PKG_NAME:=haas-proxy
 PKG_VERSION:=1.9
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 PKG_SOURCE_VERSION:=bbf8629d1d64840407eefc23d2b6c8835365347b
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/haas/proxy/raw/$(PKG_SOURCE_VERSION)/release/
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -56,7 +56,7 @@ define Package/haas-proxy/install
 	$(CP) \
 		$(PKG_INSTALL_DIR)/* \
 		$(1)
-	$(RM) -rf $(1)/usr/lib/python2.7/site-packages/haas_proxy-1.2*
+	$(RM) -rf $(1)/usr/lib/python2.7/site-packages/haas_proxy-1.*
 endef
 
 define Package/haas-proxy/postinst
