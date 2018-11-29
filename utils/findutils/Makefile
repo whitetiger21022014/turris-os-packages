@@ -80,12 +80,13 @@ define Package/findutils-locate/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/srv/var
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/locate $(1)/usr/bin/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib $(1)/usr/
+	$(RM) $(PKG_INSTALL_DIR)/usr/lib/frcode $(1)/usr/
 endef
 
 define Package/findutils-updatedb/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/srv/var
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/updatedb $(1)/usr/bin/
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib $(1)/usr/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/frcode $(1)/usr/
 endef
 
 define Package/findutils-xargs/install
