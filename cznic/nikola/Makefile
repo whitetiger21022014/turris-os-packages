@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nikola
-PKG_VERSION:=43
-PKG_RELEASE:=2
+PKG_VERSION:=44
+PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/nikola.git
 PKG_SOURCE:=$(PKG_NAME).tar.gz
-PKG_SOURCE_VERSION:=47cba3412ae3aaca6d92f60bf7d1c4dacb9bae9e
+PKG_SOURCE_VERSION:=8bfa59f9598b4dab83d79d3f34164a90c1732658
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_MAINTAINER:=CZ.NIC <packaging@turris.cz>
@@ -24,7 +24,7 @@ $(call include_mk, python3-package.mk)
 
 define Package/$(PKG_NAME)
 	TITLE:=$(PKG_NAME)
-	DEPENDS:=+python3-light +python3-setuptools +logrotate +syslog-ng3 +python3-libatsha204 +firewall +cznic-cacert-bundle
+	DEPENDS:=+python3-light +python3-setuptools +python3-zmq +python3-msgpack +logrotate +syslog-ng3 +python3-libatsha204 +firewall +cznic-cacert-bundle
 endef
 
 define Package/$(PKG_NAME)/description
