@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=python3-setuptools
-PKG_VERSION:=40.6.20
+PKG_VERSION:=40.6.2
 PKG_RELEASE:=2
 
 PKG_SOURCE:=setuptools-$(PKG_VERSION).zip
