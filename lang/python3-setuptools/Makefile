@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=python3-setuptools
-PKG_VERSION:=22.0.5
+PKG_VERSION:=40.6.20
 PKG_RELEASE:=2
 
 PKG_SOURCE:=setuptools-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://pypi.python.org/packages/90/7a/b64d5804b6d1aebed1892e4df1c21bcb4f8480095ba8004e48999601119d/
-PKG_MD5SUM:=869f3029dcc66a64ba39875e2a2f044a
+PKG_SOURCE_URL:=https://files.pythonhosted.org/packages/b0/d1/8acb42f391cba52e35b131e442e80deffbb8d0676b93261d761b1f0ef8fb/
+PKG_HASH:=86bb4d8e1b0fabad1f4642b64c335b673e53e7a381de03c9a89fe678152c4c64
 
 HOST_BUILD_DEPENDS:=python3 python3/host
 
