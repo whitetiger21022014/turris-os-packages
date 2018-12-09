@@ -20,10 +20,10 @@ HOST_BUILD_DEPENDS:=python3 python3/host
 PKG_LICENSE:=PSF
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/python3-setuptools-$(PKG_VERSION)
-PKG_UNPACK=$(HOST_TAR) -C $(PKG_BUILD_DIR) --strip-components=1 -xzf $(DL_DIR)/$(PKG_SOURCE)
+PKG_UNPACK=unzip -d $(PKG_BUILD_DIR) $(DL_DIR)/$(PKG_SOURCE) && mv $(PKG_BUILD_DIR)/*/* $(PKG_BUILD_DIR)
 
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/$(PKG_NAME)-$(PKG_VERSION)
-HOST_UNPACK=$(HOST_TAR) -C $(HOST_BUILD_DIR) --strip-components=1 -xzf $(DL_DIR)/$(PKG_SOURCE)
+HOST_UNPACK=unzip -d $(HOST_BUILD_DIR) $(DL_DIR)/$(PKG_SOURCE) && mv $(HOST_BUILD_DIR)/*/* $(HOST_BUILD_DIR)
 
 include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
