@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=foris-ssbackups-plugin
-PKG_VERSION:=8.3
+PKG_VERSION:=8.3.2
 PKG_RELEASE:=1
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE_PROTO:=git
@@ -20,7 +20,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 PKG_LICENSE:=GPL-3.0
 PKG_LICENSE_FILE:=LICENSE
 
-PKG_BUILD_DEPENDS:=python3/host python3-libsass/host python3-setuptools/host foris-plugins-distutils/host
+PKG_BUILD_DEPENDS:=python3/host python3-libsass/host foris-plugins-distutils/host
 
 include $(INCLUDE_DIR)/package.mk
 include ../foris/files/foris-translations.mk
@@ -31,7 +31,7 @@ $(call include_mk, python3-package.mk)
 define Package/$(PKG_NAME)
 	TITLE:=$(PKG_NAME)
 	DEPENDS:=\
-		+foris +foris-controller-ssbackups-module
+		+foris +foris-controller-ssbackups-module +foris-data_collect-plugin
 	MAINTAINER:=CZ.NIC <packaging@turris.cz>
 endef
 

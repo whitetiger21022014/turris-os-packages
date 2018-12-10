@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=foris-netmetr-plugin
-PKG_VERSION:=4.3
+PKG_VERSION:=4.4.2
 PKG_RELEASE:=1
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE_PROTO:=git
@@ -20,7 +20,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 PKG_LICENSE:=GPL-3.0
 PKG_LICENSE_FILE:=LICENSE
 
-PKG_BUILD_DEPENDS:=python3/host python3-libsass/host python3-setuptools/host foris-plugins-distutils/host
+PKG_BUILD_DEPENDS:=python3/host python3-libsass/host foris-plugins-distutils/host
 
 include $(INCLUDE_DIR)/package.mk
 include ../foris/files/foris-translations.mk

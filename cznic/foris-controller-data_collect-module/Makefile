@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=foris-controller-data_collect-module
-PKG_VERSION:=1.0
+PKG_VERSION:=1.1
 PKG_RELEASE:=3
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/foris-controller-data_collect-module.git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(BUILD_VARIANT)-$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 PKG_LICENSE:=GPL-3.0
 PKG_LICENSE_FILE:=LICENSE

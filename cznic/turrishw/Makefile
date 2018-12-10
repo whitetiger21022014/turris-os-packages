@@ -8,15 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=turrishw
-PKG_VERSION:=0.2
-PKG_RELEASE:=5
+PKG_VERSION:=0.4.1
+PKG_RELEASE:=1
 PKG_LICENSE:=GPLv3
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.labs.nic.cz/turris/turrishw.git
-PKG_SOURCE_VERSION:=96086a394487a4464710a1567d97d8897f18757b
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=953105a8f93ed554a955c1b28584324e4d61de10
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python-setuptools python3-setuptools
 
@@ -40,7 +40,7 @@ define Package/python2-$(PKG_NAME)
 endef
 
 define Package/python2-$(PKG_NAME)/description
-  Python bindings for Unified Configuration Interface.
+  Python library to detect available hardware on Omnia/MOX.
 endef
 
 define Package/python3-$(PKG_NAME)
@@ -50,7 +50,7 @@ define Package/python3-$(PKG_NAME)
 endef
 
 define Package/python3-$(PKG_NAME)/description
-  Python bindings for Unified Configuration Interface.
+  Python library to detect available hardware on Omnia/MOX.
 endef
 
 define Build/Compile

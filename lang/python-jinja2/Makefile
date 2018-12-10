@@ -20,7 +20,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/Jinja2-$(PKG_VERSION)
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/Jinja2-$(PKG_VERSION)
 
 PKG_BUILD_DEPENDS:=python python3
-HOST_BUILD_DEPENDS:=python/host python-setuptools/host python3/host python3-setuptools/host
+HOST_BUILD_DEPENDS:=python/host python-setuptools/host python3/host
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/host-build.mk
@@ -46,7 +46,7 @@ endef
 define Package/python3-jinja2
 	$(call Package/Common)
 	TITLE:=python3-jinja2
-	DEPENDS:=+python-light +python3-markupsafe
+	DEPENDS:=+python3-light +python3-markupsafe
 endef
 
 define Package/$(PKG_NAME)/description
